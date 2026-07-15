@@ -1,0 +1,37 @@
+name: Actualizar señales IPSA
+
+on:
+  schedule:
+    # 21:00 UTC ~ 17:00-18:00 hora Chile (poco después del cierre de la
+    # Bolsa de Santiago), de lunes a viernes. Ajusta la hora si prefieres
+    # otro momento del día.
+    - cron: "0 21 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install yfinance pandas numpy
+
+      - name: Generar señales
+        run: python generar_dashboard_data.py
+
+      - name: Publicar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/senales.json
+          git diff --cached --quiet && echo "Sin cambios" || git commit -m "Actualizar señales $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+          
