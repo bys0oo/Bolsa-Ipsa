@@ -309,6 +309,27 @@
     flex-shrink:0;
   }
 
+  .tabs-rendimiento{
+    display:flex;
+    gap:6px;
+    margin-bottom:0.85rem;
+  }
+  .tab-rend{
+    font-family:var(--font-mono);
+    font-size:12px;
+    background:none;
+    border:1px solid var(--card-border);
+    color:var(--text-secondary);
+    border-radius:999px;
+    padding:5px 12px;
+    cursor:pointer;
+  }
+  .tab-rend.activo{
+    background:var(--copper-bg);
+    border-color:var(--copper);
+    color:var(--copper);
+  }
+
   .div-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
@@ -388,7 +409,12 @@
   </section>
 
   <section class="grupo" id="seccion-top">
-    <div class="titulo-grupo">Mejor rendimiento del mes</div>
+    <div class="titulo-grupo">Mejor rendimiento</div>
+    <div class="tabs-rendimiento" id="tabs-rendimiento">
+      <button class="tab-rend activo" data-campo="retorno_10d">10 días hábiles</button>
+      <button class="tab-rend" data-campo="retorno_1m">1 mes (móvil)</button>
+      <button class="tab-rend" data-campo="retorno_mes_ant" id="tab-mes-anterior">Mes anterior</button>
+    </div>
     <div id="top-rendimiento"></div>
   </section>
 
@@ -443,6 +469,9 @@ async function cargar(){
     : 'Aún no se ha corrido la primera actualización (ver instrucciones en el repo)';
 
   const senales = data.senales || [];
+  if(data.mes_anterior_label){
+    document.getElementById('tab-mes-anterior').textContent = data.mes_anterior_label;
+  }
 
   const tape = senales.map(s => {
     const cls = s.tendencia === 'ALCISTA' ? 'up' : 'down';
@@ -623,27 +652,55 @@ function renderCartera(senalesActuales, posicionesServidor){
     </b></span>`;
 }
 
+let ultimasSenalesCache = [];
+
+const ETIQUETAS_CAMPO = {
+  retorno_10d: '10 días hábiles',
+  retorno_1m: '1 mes (móvil)',
+  retorno_mes_ant: 'el mes anterior',
+};
+
 function renderTopRendimiento(senales){
+  ultimasSenalesCache = senales;
+
+  const tabs = document.getElementById('tabs-rendimiento');
+  if(!tabs.dataset.conectado){
+    tabs.querySelectorAll('.tab-rend').forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.querySelectorAll('.tab-rend').forEach(b => b.classList.remove('activo'));
+        btn.classList.add('activo');
+        pintarRanking(btn.dataset.campo);
+      });
+    });
+    tabs.dataset.conectado = '1';
+  }
+
+  const campoActivo = tabs.querySelector('.tab-rend.activo')?.dataset.campo || 'retorno_10d';
+  pintarRanking(campoActivo);
+}
+
+function pintarRanking(campo){
   const cont = document.getElementById('top-rendimiento');
-  const conDatos = senales.filter(s => s.retorno_1m != null);
+  const conDatos = ultimasSenalesCache.filter(s => s[campo] != null);
 
   if(conDatos.length === 0){
-    cont.innerHTML = '<div class="vacio">Todavía no hay suficiente historial para calcular el retorno mensual.</div>';
+    cont.innerHTML = `<div class="vacio">Todavía no hay suficiente historial para calcular ${ETIQUETAS_CAMPO[campo]}.</div>`;
     return;
   }
 
-  const top10 = [...conDatos].sort((a, b) => b.retorno_1m - a.retorno_1m).slice(0, 10);
-  const maxAbs = Math.max(...top10.map(s => Math.abs(s.retorno_1m)), 1);
+  const top10 = [...conDatos].sort((a, b) => b[campo] - a[campo]).slice(0, 10);
+  const maxAbs = Math.max(...top10.map(s => Math.abs(s[campo])), 1);
 
   const filas = top10.map((s, i) => {
-    const positivo = s.retorno_1m >= 0;
+    const valor = s[campo];
+    const positivo = valor >= 0;
     const color = positivo ? 'var(--compra)' : 'var(--venta)';
-    const anchoPct = Math.min(100, Math.abs(s.retorno_1m) / maxAbs * 100);
+    const anchoPct = Math.min(100, Math.abs(valor) / maxAbs * 100);
     return `<div class="rank-fila">
       <span class="rank-num">${i + 1}</span>
       <span class="rank-ticker">${s.ticker.replace('.SN','')}</span>
       <span class="rank-barra-wrap"><span class="rank-barra" style="width:${anchoPct}%; background:${color};"></span></span>
-      <span class="rank-valor" style="color:${color};">${positivo ? '+' : ''}${s.retorno_1m.toFixed(2)}%</span>
+      <span class="rank-valor" style="color:${color};">${positivo ? '+' : ''}${valor.toFixed(2)}%</span>
     </div>`;
   }).join('');
 

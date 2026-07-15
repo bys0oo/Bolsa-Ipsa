@@ -20,6 +20,7 @@ from trading_latino_chile import (
     ADX_KEY_LEVEL,
     EMA_FAST,
     EMA_SLOW,
+    nombre_mes_anterior,
 )
 
 
@@ -115,7 +116,9 @@ def main():
                 "tendencia": fila["tendencia"],
                 "adx": float(fila["adx"]) if pd_notna(fila["adx"]) else None,
                 "senal": fila["señal"],
+                "retorno_10d": float(fila["retorno_10d_%"]) if pd_notna(fila["retorno_10d_%"]) else None,
                 "retorno_1m": float(fila["retorno_1m_%"]) if pd_notna(fila["retorno_1m_%"]) else None,
+                "retorno_mes_ant": float(fila["retorno_mes_ant_%"]) if pd_notna(fila["retorno_mes_ant_%"]) else None,
             })
 
     data = {
@@ -126,6 +129,7 @@ def main():
             "adx_key_level": ADX_KEY_LEVEL,
         },
         "total_tickers": len(TICKERS_IPSA),
+        "mes_anterior_label": nombre_mes_anterior(),
         "senales": filas,
     }
 

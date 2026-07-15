@@ -379,6 +379,19 @@ def calcular_benchmark(tickers=TICKERS_IPSA, period=LOOKBACK_HISTORIAL,
 # 5) DESCARGA + BARRIDO DE TODO EL UNIVERSO (señal del último día)
 # ---------------------------------------------------------------------------
 DIAS_HABILES_MES = 21
+DIAS_HABILES_10 = 10  # mismo horizonte usado para medir acierto en el backtest
+
+MESES_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
+            "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+def nombre_mes_anterior() -> str:
+    """Ej.: si hoy es cualquier día de julio, devuelve 'Junio 2026'."""
+    hoy = pd.Timestamp.now(tz="UTC")
+    primer_dia_mes_actual = hoy.replace(day=1)
+    primer_dia_mes_anterior = primer_dia_mes_actual - pd.DateOffset(months=1)
+    nombre = MESES_ES[primer_dia_mes_anterior.month - 1].capitalize()
+    return f"{nombre} {primer_dia_mes_anterior.year}"
 
 
 def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIMEFRAME_INTERVAL):
@@ -396,16 +409,39 @@ def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIM
                 continue
             info = build_signal(data)
             info["ticker"] = tk
+            precio_hoy = float(data["Close"].iloc[-1])
 
-            # Retorno del último mes (~21 días hábiles), reutilizando los
-            # mismos datos ya descargados para la señal, sin pedir nada
-            # nuevo a Yahoo Finance.
+            # Retorno a 10 días hábiles: mismo horizonte que usamos para medir
+            # acierto en el backtest histórico, para que el ranking sea
+            # directamente comparable con esas estadísticas.
+            if len(data) > DIAS_HABILES_10:
+                precio_hace_10d = float(data["Close"].iloc[-DIAS_HABILES_10 - 1])
+                info["retorno_10d_%"] = round((precio_hoy / precio_hace_10d - 1) * 100, 2)
+            else:
+                info["retorno_10d_%"] = None
+
+            # Retorno del último mes MÓVIL (~21 días hábiles): una ventana que
+            # se desliza todos los días, no se reinicia nunca.
             if len(data) > DIAS_HABILES_MES:
                 precio_hace_1m = float(data["Close"].iloc[-DIAS_HABILES_MES - 1])
-                precio_hoy = float(data["Close"].iloc[-1])
                 info["retorno_1m_%"] = round((precio_hoy / precio_hace_1m - 1) * 100, 2)
             else:
                 info["retorno_1m_%"] = None
+
+            # Retorno del MES CALENDARIO ANTERIOR completo (ej. si hoy es
+            # julio, calcula el retorno de junio completo: cierre de junio
+            # vs. cierre de mayo). Se reinicia cada 1° de mes.
+            fecha_hoy_dt = data.index[-1]
+            primer_dia_mes_actual = fecha_hoy_dt.replace(day=1)
+            primer_dia_mes_anterior = primer_dia_mes_actual - pd.DateOffset(months=1)
+            datos_mes_anterior = data[(data.index >= primer_dia_mes_anterior) & (data.index < primer_dia_mes_actual)]
+            datos_antes_mes_anterior = data[data.index < primer_dia_mes_anterior]
+            if not datos_mes_anterior.empty and not datos_antes_mes_anterior.empty:
+                precio_cierre_mes_ant = float(datos_mes_anterior["Close"].iloc[-1])
+                precio_base_mes_ant = float(datos_antes_mes_anterior["Close"].iloc[-1])
+                info["retorno_mes_ant_%"] = round((precio_cierre_mes_ant / precio_base_mes_ant - 1) * 100, 2)
+            else:
+                info["retorno_mes_ant_%"] = None
 
             resultados.append(info)
         except Exception as e:
@@ -417,7 +453,8 @@ def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIM
         return pd.DataFrame()
 
     cols = ["ticker", "precio", "tendencia", "ema10", "ema55",
-            "adx", "adx_bajando", "momentum", "squeeze", "señal", "retorno_1m_%"]
+            "adx", "adx_bajando", "momentum", "squeeze", "señal",
+            "retorno_10d_%", "retorno_1m_%", "retorno_mes_ant_%"]
     out = pd.DataFrame(resultados)[cols]
 
     orden_prioridad = {"COMPRA": 0, "VENTA": 1}
