@@ -271,6 +271,91 @@
     margin-bottom:0.75rem;
   }
   .totales b{color:var(--text-primary);}
+
+  .rank-fila{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:7px 0;
+    border-bottom:1px solid var(--card-border);
+    font-size:13px;
+  }
+  .rank-num{
+    font-family:var(--font-mono);
+    color:var(--text-muted);
+    width:18px;
+    flex-shrink:0;
+  }
+  .rank-ticker{
+    font-family:var(--font-mono);
+    flex:1;
+    color:var(--text-primary);
+  }
+  .rank-barra-wrap{
+    flex:2;
+    background:var(--card-border);
+    border-radius:4px;
+    height:6px;
+    overflow:hidden;
+  }
+  .rank-barra{
+    height:100%;
+    border-radius:4px;
+  }
+  .rank-valor{
+    font-family:var(--font-mono);
+    width:60px;
+    text-align:right;
+    flex-shrink:0;
+  }
+
+  .div-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:0.7rem;
+  }
+  .div-card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:10px;
+    padding:0.9rem 1rem;
+  }
+  .div-card.proximo{
+    border-color:var(--copper);
+  }
+  .div-card .div-ticker{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:15px;
+    color:var(--copper);
+    margin-bottom:6px;
+  }
+  .div-card .div-evento-label{
+    font-size:11px;
+    color:var(--text-muted);
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  .div-card .div-evento{
+    font-size:13px;
+    margin:2px 0 10px;
+  }
+  .div-campos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 12px;
+  }
+  .div-campos .campo-label{
+    font-size:10.5px;
+    color:var(--text-muted);
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  .div-campos .campo-valor{
+    font-family:var(--font-mono);
+    font-size:13px;
+    margin-top:1px;
+  }
 </style>
 </head>
 <body>
@@ -287,8 +372,24 @@
 
   <section class="grupo" id="seccion-cartera">
     <div class="titulo-grupo">Mi cartera simulada</div>
+    <p style="font-size:12.5px; color:var(--text-muted); margin:-0.4rem 0 0.9rem;">
+      Se registra sola con $1.000.000 CLP cada vez que aparece una señal nueva, entres o no.
+    </p>
     <div class="totales" id="totales-cartera" style="display:none;"></div>
     <div id="cartera"></div>
+  </section>
+
+  <section class="grupo" id="seccion-dividendos">
+    <div class="titulo-grupo">Dividendos</div>
+    <p style="font-size:12.5px; color:var(--text-muted); margin:-0.4rem 0 0.9rem;">
+      Cargados a mano — sin API oficial confiable disponible para esto.
+    </p>
+    <div id="dividendos"></div>
+  </section>
+
+  <section class="grupo" id="seccion-top">
+    <div class="titulo-grupo">Mejor rendimiento del mes</div>
+    <div id="top-rendimiento"></div>
   </section>
 
   <div id="contenido">
@@ -320,6 +421,22 @@ async function cargar(){
     return;
   }
 
+  let cartera = [];
+  try{
+    const respCartera = await fetch('data/cartera_simulada.json', {cache:'no-store'});
+    if(respCartera.ok) cartera = await respCartera.json();
+  }catch(err){
+    cartera = [];
+  }
+
+  let dividendos = [];
+  try{
+    const respDiv = await fetch('data/dividendos.json', {cache:'no-store'});
+    if(respDiv.ok) dividendos = await respDiv.json();
+  }catch(err){
+    dividendos = [];
+  }
+
   const fecha = data.actualizado ? new Date(data.actualizado) : null;
   actualizadoEl.textContent = fecha
     ? 'Actualizado: ' + fecha.toLocaleString('es-CL', {dateStyle:'medium', timeStyle:'short'})
@@ -339,18 +456,12 @@ async function cargar(){
   const resto = senales.filter(s => s.senal !== 'COMPRA' && s.senal !== 'VENTA');
 
   function tarjeta(s, tipo){
-    const idForm = `form-${s.ticker.replace(/[^a-zA-Z0-9]/g,'')}`;
     return `<div class="card">
       <div>
         <div class="ticker">${s.ticker}</div>
         <div class="detalle">Precio ${s.precio.toLocaleString('es-CL')} · ADX ${s.adx != null ? s.adx.toFixed(1) : '-'}</div>
       </div>
       <span class="badge ${tipo}">${tipo === 'compra' ? 'COMPRA' : 'VENTA'}</span>
-      <button class="btn-sim" onclick="toggleForm('${idForm}')">+ Simular</button>
-      <div class="form-sim" id="${idForm}">
-        <input type="number" inputmode="numeric" placeholder="Monto en CLP, ej: 1000000" id="monto-${idForm}">
-        <button onclick="registrarPosicion('${s.ticker}','${tipo === 'compra' ? 'COMPRA' : 'VENTA'}',${s.precio},'${idForm}')">Guardar</button>
-      </div>
     </div>`;
   }
 
@@ -388,112 +499,116 @@ async function cargar(){
   </details>`;
 
   contenido.innerHTML = html;
-  renderCartera(senales);
+  renderCartera(senales, cartera);
+  renderTopRendimiento(senales);
+  renderDividendos(dividendos);
 }
 
-const CLAVE_CARTERA = 'cartera_simulada_ipsa';
+const CLAVE_OCULTAS = 'cartera_ocultas_ipsa';
 
-function leerCartera(){
+function leerOcultas(){
   try{
-    return JSON.parse(localStorage.getItem(CLAVE_CARTERA) || '[]');
+    return JSON.parse(localStorage.getItem(CLAVE_OCULTAS) || '[]');
   }catch(e){
     return [];
   }
 }
 
-function guardarCartera(posiciones){
-  localStorage.setItem(CLAVE_CARTERA, JSON.stringify(posiciones));
+function ocultarPosicion(id){
+  const ocultas = leerOcultas();
+  if(!ocultas.includes(id)) ocultas.push(id);
+  localStorage.setItem(CLAVE_OCULTAS, JSON.stringify(ocultas));
+  cargar();
 }
 
-function toggleForm(id){
-  document.getElementById(id).classList.toggle('abierto');
-}
-
-function registrarPosicion(ticker, tipo, precioEntrada, idForm){
-  const inputEl = document.getElementById('monto-' + idForm);
-  const monto = parseFloat(inputEl.value);
-  if(!monto || monto <= 0){
-    inputEl.focus();
-    return;
+function calcularResultado(tipo, montoClp, precioEntrada, precioReferencia){
+  const unidades = montoClp / precioEntrada;
+  const valorReferencia = unidades * precioReferencia;
+  let gananciaClp, gananciaPct;
+  if(tipo === 'COMPRA'){
+    gananciaClp = valorReferencia - montoClp;
+    gananciaPct = (precioReferencia / precioEntrada - 1) * 100;
+  }else{
+    gananciaClp = montoClp - valorReferencia;
+    gananciaPct = (precioEntrada / precioReferencia - 1) * 100;
   }
-  const posiciones = leerCartera();
-  posiciones.push({
-    id: Date.now() + '-' + ticker,
-    ticker, tipo,
-    precio_entrada: precioEntrada,
-    monto_clp: monto,
-    fecha_entrada: new Date().toISOString(),
-  });
-  guardarCartera(posiciones);
-  inputEl.value = '';
-  toggleForm(idForm);
-  cargar();
+  return {gananciaClp, gananciaPct};
 }
 
-function eliminarPosicion(id){
-  const posiciones = leerCartera().filter(p => p.id !== id);
-  guardarCartera(posiciones);
-  cargar();
-}
-
-function renderCartera(senalesActuales){
-  const posiciones = leerCartera();
+function renderCartera(senalesActuales, posicionesServidor){
   const contCartera = document.getElementById('cartera');
   const contTotales = document.getElementById('totales-cartera');
-
-  if(posiciones.length === 0){
-    contCartera.innerHTML = '<div class="vacio">Sin posiciones simuladas todavía. '
-      + 'Usa el botón "+ Simular" en una señal de COMPRA o VENTA para registrar una.</div>';
-    contTotales.style.display = 'none';
-    return;
-  }
+  const ocultas = leerOcultas();
+  const posiciones = posicionesServidor.filter(p => !ocultas.includes(p.id));
 
   const preciosActuales = {};
   senalesActuales.forEach(s => { preciosActuales[s.ticker] = s.precio; });
+
+  if(posiciones.length === 0){
+    contCartera.innerHTML = '<div class="vacio">Sin posiciones simuladas todavía. '
+      + 'Se registran solas ($1.000.000 CLP) apenas aparezca una señal nueva de COMPRA o VENTA.</div>';
+    contTotales.style.display = 'none';
+    return;
+  }
 
   let totalInvertido = 0;
   let totalGanancia = 0;
 
   const filas = posiciones.map(p => {
-    const precioActual = preciosActuales[p.ticker];
     totalInvertido += p.monto_clp;
 
+    if(p.cerrada){
+      const clase = p.ganancia_clp_final >= 0 ? 'pos' : 'neg';
+      const signo = p.ganancia_clp_final >= 0 ? '+' : '';
+      totalGanancia += p.ganancia_clp_final;
+      const fEntrada = new Date(p.fecha_entrada).toLocaleDateString('es-CL');
+      const fCierre = new Date(p.fecha_cierre).toLocaleDateString('es-CL');
+      return `<div class="pos-card" style="opacity:0.75;">
+        <div class="pos-top">
+          <span class="ticker">${p.ticker} <span style="color:var(--text-muted); font-weight:400;">· ${p.tipo} · cerrada</span></span>
+          <span class="pos-gan ${clase}">${signo}${p.ganancia_pct_final.toFixed(2)}%</span>
+        </div>
+        <div class="pos-detalle">
+          ${fEntrada} a ${p.precio_entrada.toLocaleString('es-CL')} → cerrada ${fCierre} a ${p.precio_cierre.toLocaleString('es-CL')}
+          (señal contraria) · ${signo}${Math.round(p.ganancia_clp_final).toLocaleString('es-CL')} CLP
+        </div>
+        <button class="pos-eliminar" onclick="ocultarPosicion('${p.id}')">Ocultar</button>
+      </div>`;
+    }
+
+    const precioActual = preciosActuales[p.ticker];
     if(precioActual == null){
       return `<div class="pos-card">
         <div class="pos-top">
           <span class="ticker">${p.ticker} <span style="color:var(--text-muted); font-weight:400;">· ${p.tipo}</span></span>
         </div>
         <div class="pos-detalle">Monto ${p.monto_clp.toLocaleString('es-CL')} CLP · sin precio actual disponible (¿ticker fuera del universo?)</div>
-        <button class="pos-eliminar" onclick="eliminarPosicion('${p.id}')">Eliminar</button>
+        <button class="pos-eliminar" onclick="ocultarPosicion('${p.id}')">Ocultar</button>
       </div>`;
     }
 
-    const unidades = p.monto_clp / p.precio_entrada;
-    const valorActual = unidades * precioActual;
-    let gananciaClp, gananciaPct;
-    if(p.tipo === 'COMPRA'){
-      gananciaClp = valorActual - p.monto_clp;
-      gananciaPct = (precioActual / p.precio_entrada - 1) * 100;
-    }else{
-      gananciaClp = p.monto_clp - valorActual;
-      gananciaPct = (p.precio_entrada / precioActual - 1) * 100;
-    }
+    const {gananciaClp, gananciaPct} = calcularResultado(p.tipo, p.monto_clp, p.precio_entrada, precioActual);
     totalGanancia += gananciaClp;
 
     const clase = gananciaClp >= 0 ? 'pos' : 'neg';
     const signo = gananciaClp >= 0 ? '+' : '';
-    const fecha = new Date(p.fecha_entrada).toLocaleDateString('es-CL');
+    const fechaEntradaObj = new Date(p.fecha_entrada);
+    const fecha = fechaEntradaObj.toLocaleDateString('es-CL');
+    const diasTranscurridos = Math.floor((Date.now() - fechaEntradaObj.getTime()) / 86400000);
+    const marca10dias = diasTranscurridos >= 10
+      ? ` · <span style="color:var(--copper);">ya pasaron ${diasTranscurridos} días (referencia backtest: 10)</span>`
+      : ` · día ${diasTranscurridos} de 10 (referencia backtest)`;
 
     return `<div class="pos-card">
       <div class="pos-top">
-        <span class="ticker">${p.ticker} <span style="color:var(--text-muted); font-weight:400;">· ${p.tipo}</span></span>
+        <span class="ticker">${p.ticker} <span style="color:var(--text-muted); font-weight:400;">· ${p.tipo} · abierta</span></span>
         <span class="pos-gan ${clase}">${signo}${gananciaPct.toFixed(2)}%</span>
       </div>
       <div class="pos-detalle">
         Entrada ${fecha} a ${p.precio_entrada.toLocaleString('es-CL')} · hoy ${precioActual.toLocaleString('es-CL')} ·
-        monto ${p.monto_clp.toLocaleString('es-CL')} CLP · ${signo}${Math.round(gananciaClp).toLocaleString('es-CL')} CLP
+        monto ${p.monto_clp.toLocaleString('es-CL')} CLP · ${signo}${Math.round(gananciaClp).toLocaleString('es-CL')} CLP${marca10dias}
       </div>
-      <button class="pos-eliminar" onclick="eliminarPosicion('${p.id}')">Eliminar</button>
+      <button class="pos-eliminar" onclick="ocultarPosicion('${p.id}')">Ocultar</button>
     </div>`;
   });
 
@@ -506,6 +621,97 @@ function renderCartera(senalesActuales){
     <span>Resultado: <b style="color:${totalGanancia >= 0 ? 'var(--compra)' : 'var(--venta)'}">
       ${totalGanancia >= 0 ? '+' : ''}${Math.round(totalGanancia).toLocaleString('es-CL')} CLP (${pctTotal.toFixed(2)}%)
     </b></span>`;
+}
+
+function renderTopRendimiento(senales){
+  const cont = document.getElementById('top-rendimiento');
+  const conDatos = senales.filter(s => s.retorno_1m != null);
+
+  if(conDatos.length === 0){
+    cont.innerHTML = '<div class="vacio">Todavía no hay suficiente historial para calcular el retorno mensual.</div>';
+    return;
+  }
+
+  const top10 = [...conDatos].sort((a, b) => b.retorno_1m - a.retorno_1m).slice(0, 10);
+  const maxAbs = Math.max(...top10.map(s => Math.abs(s.retorno_1m)), 1);
+
+  const filas = top10.map((s, i) => {
+    const positivo = s.retorno_1m >= 0;
+    const color = positivo ? 'var(--compra)' : 'var(--venta)';
+    const anchoPct = Math.min(100, Math.abs(s.retorno_1m) / maxAbs * 100);
+    return `<div class="rank-fila">
+      <span class="rank-num">${i + 1}</span>
+      <span class="rank-ticker">${s.ticker.replace('.SN','')}</span>
+      <span class="rank-barra-wrap"><span class="rank-barra" style="width:${anchoPct}%; background:${color};"></span></span>
+      <span class="rank-valor" style="color:${color};">${positivo ? '+' : ''}${s.retorno_1m.toFixed(2)}%</span>
+    </div>`;
+  }).join('');
+
+  cont.innerHTML = filas;
+}
+
+function renderDividendos(dividendos){
+  const cont = document.getElementById('dividendos');
+
+  if(!dividendos || dividendos.length === 0){
+    cont.innerHTML = '<div class="vacio">Sin dividendos cargados todavía. Se agregan a mano en '
+      + '<code>data/dividendos.json</code> a medida que las empresas los declaran.</div>';
+    return;
+  }
+
+  const hoy = new Date().toISOString().slice(0, 10);
+  const ordenados = [...dividendos].sort((a, b) => b.fecha_pago.localeCompare(a.fecha_pago));
+  const futuros = dividendos.filter(d => d.fecha_pago >= hoy).sort((a, b) => a.fecha_pago.localeCompare(b.fecha_pago));
+  const masCercano = futuros[0];
+
+  function tarjeta(d){
+    const esProximo = masCercano && d.ticker === masCercano.ticker && d.fecha_pago === masCercano.fecha_pago;
+    const fLimite = d.fecha_limite ? new Date(d.fecha_limite + 'T00:00:00').toLocaleDateString('es-CL') : '-';
+    const fPago = new Date(d.fecha_pago + 'T00:00:00').toLocaleDateString('es-CL');
+    const moneda = d.moneda || '$';
+    return `<div class="div-card ${esProximo ? 'proximo' : ''}">
+      <div class="div-ticker">${d.ticker.replace('.SN','')}</div>
+      <div class="div-evento-label">Evento</div>
+      <div class="div-evento">${d.evento || 'Dividendo'}</div>
+      <div class="div-campos">
+        <div>
+          <div class="campo-label">Fecha límite</div>
+          <div class="campo-valor">${fLimite}</div>
+        </div>
+        <div>
+          <div class="campo-label">Fecha pago</div>
+          <div class="campo-valor">${fPago}</div>
+        </div>
+        <div>
+          <div class="campo-label">Pago por acción</div>
+          <div class="campo-valor">${moneda} ${Number(d.monto_por_accion).toLocaleString('es-CL')}</div>
+        </div>
+        <div>
+          <div class="campo-label">Moneda</div>
+          <div class="campo-valor">${moneda}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  const proximos = ordenados.filter(d => d.fecha_pago >= hoy).reverse();
+  const pasados = ordenados.filter(d => d.fecha_pago < hoy);
+
+  let html = '';
+  if(proximos.length){
+    html += `<div class="div-grid">${proximos.map(tarjeta).join('')}</div>`;
+  } else {
+    html += '<div class="vacio">Sin próximos pagos cargados.</div>';
+  }
+
+  if(pasados.length){
+    html += `<details style="margin-top:0.9rem;">
+      <summary>Ver ${pasados.length} dividendos ya pagados</summary>
+      <div class="div-grid" style="margin-top:0.7rem;">${pasados.map(tarjeta).join('')}</div>
+    </details>`;
+  }
+
+  cont.innerHTML = html;
 }
 
 cargar();
