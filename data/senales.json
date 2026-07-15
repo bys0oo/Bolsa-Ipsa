@@ -1,0 +1,10 @@
+{
+  "actualizado": null,
+  "parametros": {
+    "ema_fast": 10,
+    "ema_slow": 55,
+    "adx_key_level": 23
+  },
+  "total_tickers": 30,
+  "senales": []
+}

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Señales IPSA · Trading Latino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#10181A;
+    --card:#17211F;
+    --card-border:#263230;
+    --copper:#C9824C;
+    --copper-bg:#2E2318;
+    --compra:#5FB683;
+    --compra-bg:#1B2E22;
+    --venta:#D97467;
+    --venta-bg:#302019;
+    --esperar:#7C8B85;
+    --text-primary:#EDEDE6;
+    --text-secondary:#9FADA7;
+    --text-muted:#5E6B66;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text-primary);
+    font-family:var(--font-body);
+    line-height:1.5;
+    padding-bottom:3rem;
+  }
+  a{color:var(--copper);}
+  .wrap{max-width:760px; margin:0 auto; padding:0 1.25rem;}
+
+  header{padding:2rem 0 1rem;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--copper);
+    margin-bottom:0.5rem;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:28px;
+    color:var(--text-primary);
+  }
+  .actualizado{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-muted);
+    margin-top:0.4rem;
+  }
+
+  .ticker-tape{
+    border-top:1px solid var(--card-border);
+    border-bottom:1px solid var(--card-border);
+    overflow:hidden;
+    white-space:nowrap;
+    margin:1.5rem 0;
+    background:var(--card);
+  }
+  .ticker-track{
+    display:inline-block;
+    padding:0.6rem 0;
+    animation:scroll 40s linear infinite;
+  }
+  .ticker-item{
+    display:inline-flex;
+    align-items:baseline;
+    gap:6px;
+    font-family:var(--font-mono);
+    font-size:13px;
+    padding:0 1.1rem;
+    border-right:1px solid var(--card-border);
+    color:var(--text-secondary);
+  }
+  .ticker-item b{color:var(--text-primary); font-weight:500;}
+  .up{color:var(--compra);}
+  .down{color:var(--venta);}
+  @keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+  }
+
+  section.grupo{margin:1.75rem 0;}
+  .titulo-grupo{
+    font-family:var(--font-display);
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:0.75rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .punto{width:8px; height:8px; border-radius:50%; display:inline-block;}
+  .punto.compra{background:var(--compra);}
+  .punto.venta{background:var(--venta);}
+
+  .cards{display:grid; gap:0.65rem;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:10px;
+    padding:0.9rem 1.1rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:1rem;
+  }
+  .card .ticker{
+    font-family:var(--font-mono);
+    font-size:15px;
+    font-weight:500;
+  }
+  .card .detalle{
+    font-size:12.5px;
+    color:var(--text-secondary);
+    margin-top:2px;
+  }
+  .badge{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.03em;
+    padding:4px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .badge.compra{background:var(--compra-bg); color:var(--compra);}
+  .badge.venta{background:var(--venta-bg); color:var(--venta);}
+
+  .vacio{
+    background:var(--card);
+    border:1px dashed var(--card-border);
+    border-radius:10px;
+    padding:1.1rem;
+    font-size:14px;
+    color:var(--text-secondary);
+  }
+
+  details{margin-top:2rem;}
+  summary{
+    cursor:pointer;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-secondary);
+    padding:0.6rem 0;
+    border-top:1px solid var(--card-border);
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    margin-top:0.75rem;
+  }
+  th{
+    text-align:left;
+    font-family:var(--font-mono);
+    font-weight:400;
+    color:var(--text-muted);
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    padding:6px 8px;
+    border-bottom:1px solid var(--card-border);
+  }
+  td{
+    padding:7px 8px;
+    border-bottom:1px solid var(--card-border);
+    font-family:var(--font-mono);
+    color:var(--text-secondary);
+  }
+  td.ticker-col{color:var(--text-primary);}
+  .tabla-wrap{overflow-x:auto;}
+
+  footer{
+    margin-top:2.5rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--card-border);
+    font-size:12.5px;
+    color:var(--text-muted);
+  }
+  footer p{margin-bottom:0.4rem;}
+  .estado{font-family:var(--font-mono); font-size:13px; color:var(--text-secondary); padding:2rem 0;}
+
+  .card{flex-wrap:wrap;}
+  .btn-sim{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--copper);
+    background:none;
+    border:1px solid var(--copper);
+    border-radius:6px;
+    padding:4px 9px;
+    cursor:pointer;
+  }
+  .btn-sim:hover{background:var(--copper-bg);}
+  .form-sim{
+    width:100%;
+    display:none;
+    gap:8px;
+    align-items:center;
+    margin-top:0.7rem;
+    padding-top:0.7rem;
+    border-top:1px solid var(--card-border);
+  }
+  .form-sim.abierto{display:flex;}
+  .form-sim input{
+    flex:1;
+    background:var(--bg);
+    border:1px solid var(--card-border);
+    border-radius:6px;
+    color:var(--text-primary);
+    font-family:var(--font-mono);
+    font-size:13px;
+    padding:6px 8px;
+  }
+  .form-sim button{
+    font-family:var(--font-mono);
+    font-size:12px;
+    background:var(--copper);
+    color:#241608;
+    border:none;
+    border-radius:6px;
+    padding:6px 12px;
+    cursor:pointer;
+  }
+
+  .pos-card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:10px;
+    padding:0.85rem 1.05rem;
+    margin-bottom:0.6rem;
+  }
+  .pos-top{display:flex; justify-content:space-between; align-items:baseline;}
+  .pos-top .ticker{font-family:var(--font-mono); font-size:14px; font-weight:500;}
+  .pos-detalle{font-size:12px; color:var(--text-secondary); margin-top:2px;}
+  .pos-gan{font-family:var(--font-mono); font-size:15px; font-weight:500;}
+  .pos-gan.pos{color:var(--compra);}
+  .pos-gan.neg{color:var(--venta);}
+  .pos-eliminar{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--text-muted);
+    background:none;
+    border:none;
+    cursor:pointer;
+    text-decoration:underline;
+    padding:0;
+    margin-top:6px;
+  }
+  .totales{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-secondary);
+    padding:0.6rem 0 1rem;
+    border-bottom:1px solid var(--card-border);
+    margin-bottom:0.75rem;
+  }
+  .totales b{color:var(--text-primary);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Bolsa de Santiago · Metodología Trading Latino</div>
+    <h1>Señales IPSA</h1>
+    <div class="actualizado" id="actualizado">Cargando última actualización…</div>
+  </header>
+
+  <div class="ticker-tape">
+    <div class="ticker-track" id="ticker-track"></div>
+  </div>
+
+  <section class="grupo" id="seccion-cartera">
+    <div class="titulo-grupo">Mi cartera simulada</div>
+    <div class="totales" id="totales-cartera" style="display:none;"></div>
+    <div id="cartera"></div>
+  </section>
+
+  <div id="contenido">
+    <p class="estado">Cargando señales…</p>
+  </div>
+
+  <footer>
+    <p id="parametros">Filtro: EMA10/55 (tendencia) + Squeeze Momentum + ADX &gt; 23 con pendiente negativa.</p>
+    <p>Basado en el historial acumulado hasta ahora: la señal de COMPRA mostró ~61% de acierto y le ganó al benchmark de "comprar cualquier día"; la señal de VENTA funciona mejor como salida que como gatillo de corto. Esto no es una recomendación de inversión.</p>
+  </footer>
+</div>
+
+<script>
+async function cargar(){
+  const contenido = document.getElementById('contenido');
+  const actualizadoEl = document.getElementById('actualizado');
+  const tickerTrack = document.getElementById('ticker-track');
+
+  let data;
+  try{
+    const resp = await fetch('data/senales.json', {cache:'no-store'});
+    if(!resp.ok) throw new Error('No se encontró data/senales.json');
+    data = await resp.json();
+  }catch(err){
+    contenido.innerHTML = '<p class="estado">No se pudo cargar data/senales.json todavía. '
+      + 'Corre el workflow de GitHub Actions una vez (pestaña Actions → Run workflow) '
+      + 'para generar los datos iniciales.</p>';
+    actualizadoEl.textContent = 'Sin datos aún';
+    return;
+  }
+
+  const fecha = data.actualizado ? new Date(data.actualizado) : null;
+  actualizadoEl.textContent = fecha
+    ? 'Actualizado: ' + fecha.toLocaleString('es-CL', {dateStyle:'medium', timeStyle:'short'})
+    : 'Aún no se ha corrido la primera actualización (ver instrucciones en el repo)';
+
+  const senales = data.senales || [];
+
+  const tape = senales.map(s => {
+    const cls = s.tendencia === 'ALCISTA' ? 'up' : 'down';
+    const flecha = s.tendencia === 'ALCISTA' ? '↑' : '↓';
+    return `<span class="ticker-item"><b>${s.ticker.replace('.SN','')}</b> ${s.precio.toLocaleString('es-CL')} <span class="${cls}">${flecha}</span></span>`;
+  }).join('');
+  tickerTrack.innerHTML = tape + tape;
+
+  const compras = senales.filter(s => s.senal === 'COMPRA');
+  const ventas = senales.filter(s => s.senal === 'VENTA');
+  const resto = senales.filter(s => s.senal !== 'COMPRA' && s.senal !== 'VENTA');
+
+  function tarjeta(s, tipo){
+    const idForm = `form-${s.ticker.replace(/[^a-zA-Z0-9]/g,'')}`;
+    return `<div class="card">
+      <div>
+        <div class="ticker">${s.ticker}</div>
+        <div class="detalle">Precio ${s.precio.toLocaleString('es-CL')} · ADX ${s.adx != null ? s.adx.toFixed(1) : '-'}</div>
+      </div>
+      <span class="badge ${tipo}">${tipo === 'compra' ? 'COMPRA' : 'VENTA'}</span>
+      <button class="btn-sim" onclick="toggleForm('${idForm}')">+ Simular</button>
+      <div class="form-sim" id="${idForm}">
+        <input type="number" inputmode="numeric" placeholder="Monto en CLP, ej: 1000000" id="monto-${idForm}">
+        <button onclick="registrarPosicion('${s.ticker}','${tipo === 'compra' ? 'COMPRA' : 'VENTA'}',${s.precio},'${idForm}')">Guardar</button>
+      </div>
+    </div>`;
+  }
+
+  let html = '';
+
+  html += `<section class="grupo">
+    <div class="titulo-grupo"><span class="punto compra"></span>Compra (${compras.length})</div>
+    ${compras.length
+      ? `<div class="cards">${compras.map(s => tarjeta(s,'compra')).join('')}</div>`
+      : `<div class="vacio">Sin señales nuevas de compra hoy. Revisa mañana o corre una actualización manual.</div>`}
+  </section>`;
+
+  html += `<section class="grupo">
+    <div class="titulo-grupo"><span class="punto venta"></span>Venta (${ventas.length})</div>
+    ${ventas.length
+      ? `<div class="cards">${ventas.map(s => tarjeta(s,'venta')).join('')}</div>`
+      : `<div class="vacio">Sin señales nuevas de venta hoy.</div>`}
+  </section>`;
+
+  html += `<details>
+    <summary>Ver las ${resto.length} acciones restantes (sin señal nueva)</summary>
+    <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Ticker</th><th>Precio</th><th>Tendencia</th><th>ADX</th></tr></thead>
+      <tbody>
+        ${resto.map(s => `<tr>
+          <td class="ticker-col">${s.ticker}</td>
+          <td>${s.precio.toLocaleString('es-CL')}</td>
+          <td>${s.tendencia}</td>
+          <td>${s.adx != null ? s.adx.toFixed(1) : '-'}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>
+  </details>`;
+
+  contenido.innerHTML = html;
+  renderCartera(senales);
+}
+
+const CLAVE_CARTERA = 'cartera_simulada_ipsa';
+
+function leerCartera(){
+  try{
+    return JSON.parse(localStorage.getItem(CLAVE_CARTERA) || '[]');
+  }catch(e){
+    return [];
+  }
+}
+
+function guardarCartera(posiciones){
+  localStorage.setItem(CLAVE_CARTERA, JSON.stringify(posiciones));
+}
+
+function toggleForm(id){
+  document.getElementById(id).classList.toggle('abierto');
+}
+
+function registrarPosicion(ticker, tipo, precioEntrada, idForm){
+  const inputEl = document.getElementById('monto-' + idForm);
+  const monto = parseFloat(inputEl.value);
+  if(!monto || monto <= 0){
+    inputEl.focus();
+    return;
+  }
+  const posiciones = leerCartera();
+  posiciones.push({
+    id: Date.now() + '-' + ticker,
+    ticker, tipo,
+    precio_entrada: precioEntrada,
+    monto_clp: monto,
+    fecha_entrada: new Date().toISOString(),
+  });
+  guardarCartera(posiciones);
+  inputEl.value = '';
+  toggleForm(idForm);
+  cargar();
+}
+
+function eliminarPosicion(id){
+  const posiciones = leerCartera().filter(p => p.id !== id);
+  guardarCartera(posiciones);
+  cargar();
+}
+
+function renderCartera(senalesActuales){
+  const posiciones = leerCartera();
+  const contCartera = document.getElementById('cartera');
+  const contTotales = document.getElementById('totales-cartera');
+
+  if(posiciones.length === 0){
+    contCartera.innerHTML = '<div class="vacio">Sin posiciones simuladas todavía. '
+      + 'Usa el botón "+ Simular" en una señal de COMPRA o VENTA para registrar una.</div>';
+    contTotales.style.display = 'none';
+    return;
+  }
+
+  const preciosActuales = {};
+  senalesActuales.forEach(s => { preciosActuales[s.ticker] = s.precio; });
+
+  let totalInvertido = 0;
+  let totalGanancia = 0;
+
+  const filas = posiciones.map(p => {
+    const precioActual = preciosActuales[p.ticker];
+    totalInvertido += p.monto_clp;
+
+    if(precioActual == null){
+      return `<div class="pos-card">
+        <div class="pos-top">
+          <span class="ticker">${p.ticker} <span style="color:var(--text-muted); font-weight:400;">· ${p.tipo}</span></span>
+        </div>
+        <div class="pos-detalle">Monto ${p.monto_clp.toLocaleString('es-CL')} CLP · sin precio actual disponible (¿ticker fuera del universo?)</div>
+        <button class="pos-eliminar" onclick="eliminarPosicion('${p.id}')">Eliminar</button>
+      </div>`;
+    }
+
+    const unidades = p.monto_clp / p.precio_entrada;
+    const valorActual = unidades * precioActual;
+    let gananciaClp, gananciaPct;
+    if(p.tipo === 'COMPRA'){
+      gananciaClp = valorActual - p.monto_clp;
+      gananciaPct = (precioActual / p.precio_entrada - 1) * 100;
+    }else{
+      gananciaClp = p.monto_clp - valorActual;
+      gananciaPct = (p.precio_entrada / precioActual - 1) * 100;
+    }
+    totalGanancia += gananciaClp;
+
+    const clase = gananciaClp >= 0 ? 'pos' : 'neg';
+    const signo = gananciaClp >= 0 ? '+' : '';
+    const fecha = new Date(p.fecha_entrada).toLocaleDateString('es-CL');
+
+    return `<div class="pos-card">
+      <div class="pos-top">
+        <span class="ticker">${p.ticker} <span style="color:var(--text-muted); font-weight:400;">· ${p.tipo}</span></span>
+        <span class="pos-gan ${clase}">${signo}${gananciaPct.toFixed(2)}%</span>
+      </div>
+      <div class="pos-detalle">
+        Entrada ${fecha} a ${p.precio_entrada.toLocaleString('es-CL')} · hoy ${precioActual.toLocaleString('es-CL')} ·
+        monto ${p.monto_clp.toLocaleString('es-CL')} CLP · ${signo}${Math.round(gananciaClp).toLocaleString('es-CL')} CLP
+      </div>
+      <button class="pos-eliminar" onclick="eliminarPosicion('${p.id}')">Eliminar</button>
+    </div>`;
+  });
+
+  contCartera.innerHTML = filas.join('');
+
+  const pctTotal = totalInvertido > 0 ? (totalGanancia / totalInvertido * 100) : 0;
+  contTotales.style.display = 'flex';
+  contTotales.innerHTML = `
+    <span>Invertido: <b>${Math.round(totalInvertido).toLocaleString('es-CL')} CLP</b></span>
+    <span>Resultado: <b style="color:${totalGanancia >= 0 ? 'var(--compra)' : 'var(--venta)'}">
+      ${totalGanancia >= 0 ? '+' : ''}${Math.round(totalGanancia).toLocaleString('es-CL')} CLP (${pctTotal.toFixed(2)}%)
+    </b></span>`;
+}
+
+cargar();
+</script>
+</body>
+</html>
