@@ -115,6 +115,7 @@ def main():
                 "tendencia": fila["tendencia"],
                 "adx": float(fila["adx"]) if pd_notna(fila["adx"]) else None,
                 "senal": fila["señal"],
+                "retorno_1m": float(fila["retorno_1m_%"]) if pd_notna(fila["retorno_1m_%"]) else None,
             })
 
     data = {

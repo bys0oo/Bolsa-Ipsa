@@ -378,6 +378,9 @@ def calcular_benchmark(tickers=TICKERS_IPSA, period=LOOKBACK_HISTORIAL,
 # ---------------------------------------------------------------------------
 # 5) DESCARGA + BARRIDO DE TODO EL UNIVERSO (señal del último día)
 # ---------------------------------------------------------------------------
+DIAS_HABILES_MES = 21
+
+
 def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIMEFRAME_INTERVAL):
     resultados = []
     for tk in tickers:
@@ -393,6 +396,17 @@ def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIM
                 continue
             info = build_signal(data)
             info["ticker"] = tk
+
+            # Retorno del último mes (~21 días hábiles), reutilizando los
+            # mismos datos ya descargados para la señal, sin pedir nada
+            # nuevo a Yahoo Finance.
+            if len(data) > DIAS_HABILES_MES:
+                precio_hace_1m = float(data["Close"].iloc[-DIAS_HABILES_MES - 1])
+                precio_hoy = float(data["Close"].iloc[-1])
+                info["retorno_1m_%"] = round((precio_hoy / precio_hace_1m - 1) * 100, 2)
+            else:
+                info["retorno_1m_%"] = None
+
             resultados.append(info)
         except Exception as e:
             print(f"[!] {tk}: error -> {e}")
@@ -403,7 +417,7 @@ def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIM
         return pd.DataFrame()
 
     cols = ["ticker", "precio", "tendencia", "ema10", "ema55",
-            "adx", "adx_bajando", "momentum", "squeeze", "señal"]
+            "adx", "adx_bajando", "momentum", "squeeze", "señal", "retorno_1m_%"]
     out = pd.DataFrame(resultados)[cols]
 
     orden_prioridad = {"COMPRA": 0, "VENTA": 1}
