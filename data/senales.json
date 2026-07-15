@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-15T18:21+00:00",
+  "actualizado": "2026-07-15T20:15+00:00",
   "parametros": {
     "ema_fast": 10,
     "ema_slow": 55,
@@ -9,28 +9,28 @@
   "senales": [
     {
       "ticker": "SQM-B.SN",
-      "precio": 65619.0,
+      "precio": 66077.0,
       "tendencia": "BAJISTA",
       "adx": 15.7,
       "senal": "TENDENCIA BAJISTA (sin nueva señal)"
     },
     {
       "ticker": "CHILE.SN",
-      "precio": 187.5,
+      "precio": 188.04,
       "tendencia": "ALCISTA",
       "adx": 30.9,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "BSANTANDER.SN",
-      "precio": 77.61,
+      "precio": 77.78,
       "tendencia": "ALCISTA",
       "adx": 40.1,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "FALABELLA.SN",
-      "precio": 5905.0,
+      "precio": 5880.5,
       "tendencia": "ALCISTA",
       "adx": 10.1,
       "senal": "ESPERAR"
@@ -44,56 +44,56 @@
     },
     {
       "ticker": "CCU.SN",
-      "precio": 5219.9,
+      "precio": 5220.0,
       "tendencia": "BAJISTA",
       "adx": 12.1,
       "senal": "ESPERAR"
     },
     {
       "ticker": "COPEC.SN",
-      "precio": 6216.0,
+      "precio": 6152.1,
       "tendencia": "BAJISTA",
       "adx": 17.5,
       "senal": "ESPERAR"
     },
     {
       "ticker": "ENELCHILE.SN",
-      "precio": 82.38,
+      "precio": 82.17,
       "tendencia": "ALCISTA",
       "adx": 7.6,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "ENELAM.SN",
-      "precio": 85.32,
+      "precio": 85.02,
       "tendencia": "ALCISTA",
       "adx": 21.4,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "CMPC.SN",
-      "precio": 1081.1,
+      "precio": 1077.5,
       "tendencia": "BAJISTA",
       "adx": 19.8,
       "senal": "ESPERAR"
     },
     {
       "ticker": "ITAUCL.SN",
-      "precio": 20348.0,
+      "precio": 20442.0,
       "tendencia": "ALCISTA",
       "adx": 36.5,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "BCI.SN",
-      "precio": 63578.0,
+      "precio": 63501.0,
       "tendencia": "ALCISTA",
       "adx": 23.2,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "PARAUCO.SN",
-      "precio": 4025.7,
+      "precio": 3996.9,
       "tendencia": "ALCISTA",
       "adx": 17.2,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
@@ -107,42 +107,42 @@
     },
     {
       "ticker": "SMU.SN",
-      "precio": 130.5,
+      "precio": 129.91,
       "tendencia": "BAJISTA",
-      "adx": 26.2,
+      "adx": 25.9,
       "senal": "TENDENCIA BAJISTA (sin nueva señal)"
     },
     {
       "ticker": "VAPORES.SN",
-      "precio": 47.63,
+      "precio": 47.78,
       "tendencia": "ALCISTA",
       "adx": 24.7,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "CAP.SN",
-      "precio": 6339.8,
+      "precio": 6311.0,
       "tendencia": "BAJISTA",
-      "adx": 10.0,
+      "adx": 10.1,
       "senal": "TENDENCIA BAJISTA (sin nueva señal)"
     },
     {
       "ticker": "LTM.SN",
-      "precio": 25.43,
+      "precio": 25.27,
       "tendencia": "ALCISTA",
       "adx": 22.0,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "ANDINA-B.SN",
-      "precio": 4684.2,
+      "precio": 4747.0,
       "tendencia": "ALCISTA",
       "adx": 41.4,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "CONCHATORO.SN",
-      "precio": 853.0,
+      "precio": 856.06,
       "tendencia": "BAJISTA",
       "adx": 22.5,
       "senal": "TENDENCIA BAJISTA (sin nueva señal)"
@@ -156,56 +156,56 @@
     },
     {
       "ticker": "ENTEL.SN",
-      "precio": 3738.9,
+      "precio": 3720.0,
       "tendencia": "ALCISTA",
       "adx": 17.9,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "ILC.SN",
-      "precio": 21614.0,
+      "precio": 21799.0,
       "tendencia": "ALCISTA",
-      "adx": 26.6,
+      "adx": 26.9,
       "senal": "ESPERAR"
     },
     {
       "ticker": "COLBUN.SN",
-      "precio": 134.9,
+      "precio": 134.44,
       "tendencia": "ALCISTA",
       "adx": 18.4,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "AGUAS-A.SN",
-      "precio": 335.4,
+      "precio": 334.42,
       "tendencia": "BAJISTA",
       "adx": 12.0,
       "senal": "ESPERAR"
     },
     {
       "ticker": "ECL.SN",
-      "precio": 1779.0,
+      "precio": 1799.0,
       "tendencia": "ALCISTA",
-      "adx": 11.9,
+      "adx": 12.2,
       "senal": "ESPERAR"
     },
     {
       "ticker": "MALLPLAZA.SN",
-      "precio": 3915.0,
+      "precio": 3882.9,
       "tendencia": "ALCISTA",
-      "adx": 25.6,
+      "adx": 25.3,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "QUINENCO.SN",
-      "precio": 4240.0,
+      "precio": 4271.1,
       "tendencia": "ALCISTA",
       "adx": 23.1,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)"
     },
     {
       "ticker": "ORO-BLANCO.SN",
-      "precio": 10.56,
+      "precio": 10.71,
       "tendencia": "BAJISTA",
       "adx": 17.8,
       "senal": "TENDENCIA BAJISTA (sin nueva señal)"
