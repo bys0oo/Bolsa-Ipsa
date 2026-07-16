@@ -119,6 +119,10 @@ def main():
                 "retorno_10d": float(fila["retorno_10d_%"]) if pd_notna(fila["retorno_10d_%"]) else None,
                 "retorno_1m": float(fila["retorno_1m_%"]) if pd_notna(fila["retorno_1m_%"]) else None,
                 "retorno_mes_ant": float(fila["retorno_mes_ant_%"]) if pd_notna(fila["retorno_mes_ant_%"]) else None,
+                "watchlist_score": int(fila["watchlist_score"]) if pd_notna(fila["watchlist_score"]) else 0,
+                "watchlist_ema_pct": float(fila["watchlist_ema_pct"]) if pd_notna(fila["watchlist_ema_pct"]) else None,
+                "watchlist_en_squeeze": bool(fila["watchlist_en_squeeze"]),
+                "watchlist_adx_subiendo": bool(fila["watchlist_adx_subiendo"]),
             })
 
     data = {

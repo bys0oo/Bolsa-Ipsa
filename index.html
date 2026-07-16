@@ -139,6 +139,17 @@
   .badge.compra{background:var(--compra-bg); color:var(--compra);}
   .badge.venta{background:var(--venta-bg); color:var(--venta);}
 
+  .chip{
+    display:inline-block;
+    font-size:11px;
+    padding:2px 8px;
+    border-radius:999px;
+    background:var(--bg-soft, rgba(127,127,127,0.12));
+    color:var(--text-secondary);
+    margin:2px 4px 2px 0;
+    white-space:nowrap;
+  }
+
   .vacio{
     background:var(--card);
     border:1px dashed var(--card-border);
@@ -508,6 +519,40 @@ async function cargar(){
     ${ventas.length
       ? `<div class="cards">${ventas.map(s => tarjeta(s,'venta')).join('')}</div>`
       : `<div class="vacio">Sin señales nuevas de venta hoy.</div>`}
+  </section>`;
+
+  const watchlist = senales
+    .filter(s => s.senal !== 'COMPRA' && s.watchlist_score >= 1)
+    .sort((a,b) => b.watchlist_score - a.watchlist_score)
+    .slice(0, 10);
+
+  function tarjetaWatchlist(s){
+    const chips = [
+      s.watchlist_ema_pct != null
+        ? `<span class="chip">EMA acercándose (${s.watchlist_ema_pct.toFixed(2)}%)</span>` : '',
+      s.watchlist_en_squeeze ? `<span class="chip">En squeeze</span>` : '',
+      s.watchlist_adx_subiendo ? `<span class="chip">ADX subiendo</span>` : '',
+    ].filter(Boolean).join(' ');
+    return `<div class="card">
+      <div>
+        <div class="ticker">${s.ticker}</div>
+        <div class="detalle">Precio ${s.precio.toLocaleString('es-CL')} · ADX ${s.adx != null ? s.adx.toFixed(1) : '-'}</div>
+        <div class="detalle" style="margin-top:0.3rem;">${chips || 'Sin condiciones activas'}</div>
+      </div>
+      <span class="badge compra" style="opacity:${0.4 + s.watchlist_score/5}">${s.watchlist_score}/3</span>
+    </div>`;
+  }
+
+  html += `<section class="grupo">
+    <div class="titulo-grupo"><span class="punto compra"></span>Watchlist: cerca de COMPRA</div>
+    <p style="font-size:12.5px; color:var(--text-muted); margin:-0.4rem 0 0.9rem;">
+      Acciones que todavía NO gatillan señal, pero cumplen alguna de las 3 condiciones
+      (EMA10/55 achicando distancia, squeeze reciente, ADX subiendo). No es una señal —
+      es solo seguimiento anticipado.
+    </p>
+    ${watchlist.length
+      ? `<div class="cards">${watchlist.map(tarjetaWatchlist).join('')}</div>`
+      : `<div class="vacio">Ninguna acción cumple hoy alguna condición de acercamiento.</div>`}
   </section>`;
 
   html += `<details>

@@ -180,6 +180,8 @@ def build_signal(df: pd.DataFrame) -> dict:
     elif (not trend_up) and (not last["mom_up"]):
         signal = "TENDENCIA BAJISTA (sin nueva señal)"
 
+    cercania = evaluar_cercania_compra(df)
+
     return {
         "precio": round(last["Close"], 2),
         "ema10": round(last["ema_fast"], 2),
@@ -192,6 +194,58 @@ def build_signal(df: pd.DataFrame) -> dict:
         "squeeze": "EN SQUEEZE (baja volatilidad)" if last["sqz_on"] else (
             "LIBERADO" if last["sqz_off"] else "-"),
         "señal": signal,
+        "watchlist_score": cercania["score"],
+        "watchlist_ema_pct": cercania["distancia_ema_%"],
+        "watchlist_en_squeeze": cercania["en_squeeze_reciente"],
+        "watchlist_adx_subiendo": cercania["adx_subiendo"],
+    }
+
+
+# ---------------------------------------------------------------------------
+# 4.1) WATCHLIST: acciones que aún NO gatillan COMPRA pero se están
+# acercando, usando versiones relajadas de los mismos 3 filtros de Trading
+# Latino. Esto NO reemplaza la señal real (que exige los 3 confirmados a
+# la vez); es solo una alerta temprana para hacerles seguimiento.
+# ---------------------------------------------------------------------------
+N_CERCANIA = 5  # barras hacia atrás para medir si se está "acercando"
+
+
+def evaluar_cercania_compra(df: pd.DataFrame) -> dict:
+    """
+    Puntaje 0-3 según cuántas de estas condiciones (relajadas) se cumplen:
+      1) EMA10 se está acercando a cruzar hacia arriba a la EMA55 (todavía
+         por debajo, pero la distancia porcentual se viene achicando).
+      2) Estuvo en squeeze (baja volatilidad / compresión) en las últimas
+         N_CERCANIA barras -> presión acumulada, posible impulso próximo.
+      3) El ADX viene subiendo desde niveles bajos (aún no supera
+         ADX_KEY_LEVEL, pero la tendencia del indicador es al alza).
+    Requiere que las columnas ema_fast/ema_slow/adx/sqz_on ya estén
+    calculadas en df (build_signal las agrega antes de llamar a esto).
+    """
+    if len(df) < N_CERCANIA + 2 or df[["ema_fast", "ema_slow", "adx"]].iloc[-1].isna().any():
+        return {"score": 0, "distancia_ema_%": None, "en_squeeze_reciente": False,
+                "adx_subiendo": False}
+
+    last = df.iloc[-1]
+    antes = df.iloc[-1 - N_CERCANIA]
+
+    dist_ema_hoy = (last["ema_fast"] - last["ema_slow"]) / last["ema_slow"] * 100
+    dist_ema_antes = (antes["ema_fast"] - antes["ema_slow"]) / antes["ema_slow"] * 100
+    # Todavía bajo la EMA55 (no hay cruce aún), pero la brecha se acorta.
+    cond_ema = bool(-2.0 <= dist_ema_hoy < 0 and dist_ema_hoy > dist_ema_antes)
+
+    cond_squeeze = bool(df["sqz_on"].iloc[-N_CERCANIA:].fillna(False).any())
+
+    adx_hoy, adx_antes = last["adx"], antes["adx"]
+    cond_adx = bool(pd.notna(adx_hoy) and pd.notna(adx_antes)
+                    and adx_hoy < ADX_KEY_LEVEL and adx_hoy > adx_antes)
+
+    score = int(cond_ema) + int(cond_squeeze) + int(cond_adx)
+    return {
+        "score": score,
+        "distancia_ema_%": round(float(dist_ema_hoy), 2),
+        "en_squeeze_reciente": cond_squeeze,
+        "adx_subiendo": cond_adx,
     }
 
 
@@ -454,7 +508,9 @@ def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIM
 
     cols = ["ticker", "precio", "tendencia", "ema10", "ema55",
             "adx", "adx_bajando", "momentum", "squeeze", "señal",
-            "retorno_10d_%", "retorno_1m_%", "retorno_mes_ant_%"]
+            "retorno_10d_%", "retorno_1m_%", "retorno_mes_ant_%",
+            "watchlist_score", "watchlist_ema_pct", "watchlist_en_squeeze",
+            "watchlist_adx_subiendo"]
     out = pd.DataFrame(resultados)[cols]
 
     orden_prioridad = {"COMPRA": 0, "VENTA": 1}
