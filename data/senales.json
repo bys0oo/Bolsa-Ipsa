@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-16T00:13+00:00",
+  "actualizado": "2026-07-16T17:43+00:00",
   "parametros": {
     "ema_fast": 10,
     "ema_slow": 55,
@@ -16,7 +16,11 @@
       "senal": "TENDENCIA BAJISTA (sin nueva señal)",
       "retorno_10d": -3.87,
       "retorno_1m": -10.92,
-      "retorno_mes_ant": -10.17
+      "retorno_mes_ant": -10.17,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": -4.4,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "CHILE.SN",
@@ -26,7 +30,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 5.22,
       "retorno_1m": 4.64,
-      "retorno_mes_ant": 7.66
+      "retorno_mes_ant": 7.66,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 5.02,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "BSANTANDER.SN",
@@ -36,7 +44,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 4.21,
       "retorno_1m": 5.64,
-      "retorno_mes_ant": 7.86
+      "retorno_mes_ant": 7.86,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": 5.19,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "FALABELLA.SN",
@@ -46,7 +58,11 @@
       "senal": "ESPERAR",
       "retorno_10d": 1.35,
       "retorno_1m": -1.96,
-      "retorno_mes_ant": 0.98
+      "retorno_mes_ant": 0.98,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 0.85,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "CENCOSUD.SN",
@@ -56,7 +72,11 @@
       "senal": "TENDENCIA BAJISTA (sin nueva señal)",
       "retorno_10d": -4.57,
       "retorno_1m": -11.86,
-      "retorno_mes_ant": 1.48
+      "retorno_mes_ant": 1.48,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": -5.48,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "CCU.SN",
@@ -66,7 +86,11 @@
       "senal": "ESPERAR",
       "retorno_10d": 3.33,
       "retorno_1m": -0.01,
-      "retorno_mes_ant": -4.67
+      "retorno_mes_ant": -4.67,
+      "watchlist_score": 3,
+      "watchlist_ema_pct": -0.62,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": true
     },
     {
       "ticker": "COPEC.SN",
@@ -76,7 +100,11 @@
       "senal": "ESPERAR",
       "retorno_10d": 5.62,
       "retorno_1m": 2.1,
-      "retorno_mes_ant": -9.05
+      "retorno_mes_ant": -9.05,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": -1.43,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "ENELCHILE.SN",
@@ -86,7 +114,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 0.74,
       "retorno_1m": 0.82,
-      "retorno_mes_ant": 4.79
+      "retorno_mes_ant": 4.79,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 3.59,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "ENELAM.SN",
@@ -96,7 +128,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 3.41,
       "retorno_1m": 7.34,
-      "retorno_mes_ant": 5.9
+      "retorno_mes_ant": 5.9,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 3.51,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": true
     },
     {
       "ticker": "CMPC.SN",
@@ -106,7 +142,11 @@
       "senal": "ESPERAR",
       "retorno_10d": 4.17,
       "retorno_1m": 1.51,
-      "retorno_mes_ant": -3.75
+      "retorno_mes_ant": -3.75,
+      "watchlist_score": 3,
+      "watchlist_ema_pct": -1.07,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": true
     },
     {
       "ticker": "ITAUCL.SN",
@@ -116,7 +156,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 5.94,
       "retorno_1m": 12.94,
-      "retorno_mes_ant": 4.43
+      "retorno_mes_ant": 4.43,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": 6.19,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "BCI.SN",
@@ -126,7 +170,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 3.12,
       "retorno_1m": 5.02,
-      "retorno_mes_ant": 0.86
+      "retorno_mes_ant": 0.86,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": 3.58,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "PARAUCO.SN",
@@ -136,7 +184,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 2.21,
       "retorno_1m": 7.15,
-      "retorno_mes_ant": -0.9
+      "retorno_mes_ant": -0.9,
+      "watchlist_score": 2,
+      "watchlist_ema_pct": 2.0,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": true
     },
     {
       "ticker": "RIPLEY.SN",
@@ -146,7 +198,11 @@
       "senal": "ESPERAR",
       "retorno_10d": 1.05,
       "retorno_1m": -1.03,
-      "retorno_mes_ant": 0.12
+      "retorno_mes_ant": 0.12,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 0.21,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "SMU.SN",
@@ -156,7 +212,11 @@
       "senal": "TENDENCIA BAJISTA (sin nueva señal)",
       "retorno_10d": -2.79,
       "retorno_1m": -1.9,
-      "retorno_mes_ant": -8.97
+      "retorno_mes_ant": -8.97,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": -2.57,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "VAPORES.SN",
@@ -166,7 +226,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 8.38,
       "retorno_1m": 7.59,
-      "retorno_mes_ant": -1.55
+      "retorno_mes_ant": -1.55,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": 2.77,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "CAP.SN",
@@ -176,7 +240,11 @@
       "senal": "TENDENCIA BAJISTA (sin nueva señal)",
       "retorno_10d": -0.62,
       "retorno_1m": -1.69,
-      "retorno_mes_ant": -5.1
+      "retorno_mes_ant": -5.1,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": -2.97,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "LTM.SN",
@@ -186,7 +254,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": -3.79,
       "retorno_1m": 3.25,
-      "retorno_mes_ant": 11.45
+      "retorno_mes_ant": 11.45,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": 4.96,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "ANDINA-B.SN",
@@ -196,7 +268,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 4.1,
       "retorno_1m": 8.13,
-      "retorno_mes_ant": 2.0
+      "retorno_mes_ant": 2.0,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 5.23,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "CONCHATORO.SN",
@@ -206,7 +282,11 @@
       "senal": "TENDENCIA BAJISTA (sin nueva señal)",
       "retorno_10d": -0.45,
       "retorno_1m": -0.45,
-      "retorno_mes_ant": -3.8
+      "retorno_mes_ant": -3.8,
+      "watchlist_score": 3,
+      "watchlist_ema_pct": -1.07,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": true
     },
     {
       "ticker": "SONDA.SN",
@@ -216,7 +296,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 2.15,
       "retorno_1m": 10.02,
-      "retorno_mes_ant": 2.11
+      "retorno_mes_ant": 2.11,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": 4.51,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "ENTEL.SN",
@@ -226,7 +310,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 5.59,
       "retorno_1m": 6.55,
-      "retorno_mes_ant": 0.0
+      "retorno_mes_ant": 0.0,
+      "watchlist_score": 2,
+      "watchlist_ema_pct": 1.36,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": true
     },
     {
       "ticker": "ILC.SN",
@@ -236,7 +324,11 @@
       "senal": "ESPERAR",
       "retorno_10d": -1.28,
       "retorno_1m": -1.28,
-      "retorno_mes_ant": -4.51
+      "retorno_mes_ant": -4.51,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 2.05,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "COLBUN.SN",
@@ -246,7 +338,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 3.51,
       "retorno_1m": 9.75,
-      "retorno_mes_ant": -0.45
+      "retorno_mes_ant": -0.45,
+      "watchlist_score": 2,
+      "watchlist_ema_pct": 0.43,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": true
     },
     {
       "ticker": "AGUAS-A.SN",
@@ -256,7 +352,11 @@
       "senal": "ESPERAR",
       "retorno_10d": 1.41,
       "retorno_1m": 0.44,
-      "retorno_mes_ant": -1.46
+      "retorno_mes_ant": -1.46,
+      "watchlist_score": 2,
+      "watchlist_ema_pct": -0.07,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "ECL.SN",
@@ -266,7 +366,11 @@
       "senal": "ESPERAR",
       "retorno_10d": -0.04,
       "retorno_1m": 0.14,
-      "retorno_mes_ant": -2.7
+      "retorno_mes_ant": -2.7,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 1.8,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "MALLPLAZA.SN",
@@ -276,7 +380,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 2.76,
       "retorno_1m": 4.27,
-      "retorno_mes_ant": -2.06
+      "retorno_mes_ant": -2.06,
+      "watchlist_score": 1,
+      "watchlist_ema_pct": 0.64,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "QUINENCO.SN",
@@ -286,7 +394,11 @@
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
       "retorno_10d": 8.79,
       "retorno_1m": 9.88,
-      "retorno_mes_ant": 0.64
+      "retorno_mes_ant": 0.64,
+      "watchlist_score": 0,
+      "watchlist_ema_pct": 3.46,
+      "watchlist_en_squeeze": false,
+      "watchlist_adx_subiendo": false
     },
     {
       "ticker": "ORO-BLANCO.SN",
@@ -296,17 +408,25 @@
       "senal": "TENDENCIA BAJISTA (sin nueva señal)",
       "retorno_10d": -3.6,
       "retorno_1m": -6.78,
-      "retorno_mes_ant": -5.17
+      "retorno_mes_ant": -5.17,
+      "watchlist_score": 2,
+      "watchlist_ema_pct": -1.32,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": true
     },
     {
       "ticker": "SK.SN",
       "precio": 1632.3,
       "tendencia": "BAJISTA",
-      "adx": 16.8,
+      "adx": 16.2,
       "senal": "ESPERAR",
       "retorno_10d": 0.14,
-      "retorno_1m": 0.14,
-      "retorno_mes_ant": -0.89
+      "retorno_1m": 0.13,
+      "retorno_mes_ant": -0.89,
+      "watchlist_score": 2,
+      "watchlist_ema_pct": -1.18,
+      "watchlist_en_squeeze": true,
+      "watchlist_adx_subiendo": false
     }
   ]
 }
