@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-16T17:43+00:00",
+  "actualizado": "2026-07-16T17:53+00:00",
   "parametros": {
     "ema_fast": 10,
     "ema_slow": 55,
@@ -19,6 +19,7 @@
       "retorno_mes_ant": -10.17,
       "watchlist_score": 0,
       "watchlist_ema_pct": -4.4,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -33,6 +34,7 @@
       "retorno_mes_ant": 7.66,
       "watchlist_score": 1,
       "watchlist_ema_pct": 5.02,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -47,6 +49,7 @@
       "retorno_mes_ant": 7.86,
       "watchlist_score": 0,
       "watchlist_ema_pct": 5.19,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -61,6 +64,7 @@
       "retorno_mes_ant": 0.98,
       "watchlist_score": 1,
       "watchlist_ema_pct": 0.85,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -75,6 +79,7 @@
       "retorno_mes_ant": 1.48,
       "watchlist_score": 0,
       "watchlist_ema_pct": -5.48,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -89,6 +94,7 @@
       "retorno_mes_ant": -4.67,
       "watchlist_score": 3,
       "watchlist_ema_pct": -0.62,
+      "watchlist_ema_cerca": true,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": true
     },
@@ -103,6 +109,7 @@
       "retorno_mes_ant": -9.05,
       "watchlist_score": 1,
       "watchlist_ema_pct": -1.43,
+      "watchlist_ema_cerca": true,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -117,6 +124,7 @@
       "retorno_mes_ant": 4.79,
       "watchlist_score": 1,
       "watchlist_ema_pct": 3.59,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -131,6 +139,7 @@
       "retorno_mes_ant": 5.9,
       "watchlist_score": 1,
       "watchlist_ema_pct": 3.51,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": true
     },
@@ -145,6 +154,7 @@
       "retorno_mes_ant": -3.75,
       "watchlist_score": 3,
       "watchlist_ema_pct": -1.07,
+      "watchlist_ema_cerca": true,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": true
     },
@@ -159,6 +169,7 @@
       "retorno_mes_ant": 4.43,
       "watchlist_score": 0,
       "watchlist_ema_pct": 6.19,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -173,6 +184,7 @@
       "retorno_mes_ant": 0.86,
       "watchlist_score": 0,
       "watchlist_ema_pct": 3.58,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -187,6 +199,7 @@
       "retorno_mes_ant": -0.9,
       "watchlist_score": 2,
       "watchlist_ema_pct": 2.0,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": true
     },
@@ -201,6 +214,7 @@
       "retorno_mes_ant": 0.12,
       "watchlist_score": 1,
       "watchlist_ema_pct": 0.21,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -215,6 +229,7 @@
       "retorno_mes_ant": -8.97,
       "watchlist_score": 1,
       "watchlist_ema_pct": -2.57,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -229,6 +244,7 @@
       "retorno_mes_ant": -1.55,
       "watchlist_score": 0,
       "watchlist_ema_pct": 2.77,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -243,6 +259,7 @@
       "retorno_mes_ant": -5.1,
       "watchlist_score": 1,
       "watchlist_ema_pct": -2.97,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -257,6 +274,7 @@
       "retorno_mes_ant": 11.45,
       "watchlist_score": 0,
       "watchlist_ema_pct": 4.96,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -271,6 +289,7 @@
       "retorno_mes_ant": 2.0,
       "watchlist_score": 1,
       "watchlist_ema_pct": 5.23,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -285,6 +304,7 @@
       "retorno_mes_ant": -3.8,
       "watchlist_score": 3,
       "watchlist_ema_pct": -1.07,
+      "watchlist_ema_cerca": true,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": true
     },
@@ -299,6 +319,7 @@
       "retorno_mes_ant": 2.11,
       "watchlist_score": 0,
       "watchlist_ema_pct": 4.51,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -313,6 +334,7 @@
       "retorno_mes_ant": 0.0,
       "watchlist_score": 2,
       "watchlist_ema_pct": 1.36,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": true
     },
@@ -327,6 +349,7 @@
       "retorno_mes_ant": -4.51,
       "watchlist_score": 1,
       "watchlist_ema_pct": 2.05,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -341,6 +364,7 @@
       "retorno_mes_ant": -0.45,
       "watchlist_score": 2,
       "watchlist_ema_pct": 0.43,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": true
     },
@@ -355,6 +379,7 @@
       "retorno_mes_ant": -1.46,
       "watchlist_score": 2,
       "watchlist_ema_pct": -0.07,
+      "watchlist_ema_cerca": true,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -369,6 +394,7 @@
       "retorno_mes_ant": -2.7,
       "watchlist_score": 1,
       "watchlist_ema_pct": 1.8,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -383,6 +409,7 @@
       "retorno_mes_ant": -2.06,
       "watchlist_score": 1,
       "watchlist_ema_pct": 0.64,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     },
@@ -397,6 +424,7 @@
       "retorno_mes_ant": 0.64,
       "watchlist_score": 0,
       "watchlist_ema_pct": 3.46,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": false,
       "watchlist_adx_subiendo": false
     },
@@ -411,6 +439,7 @@
       "retorno_mes_ant": -5.17,
       "watchlist_score": 2,
       "watchlist_ema_pct": -1.32,
+      "watchlist_ema_cerca": false,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": true
     },
@@ -425,6 +454,7 @@
       "retorno_mes_ant": -0.89,
       "watchlist_score": 2,
       "watchlist_ema_pct": -1.18,
+      "watchlist_ema_cerca": true,
       "watchlist_en_squeeze": true,
       "watchlist_adx_subiendo": false
     }
