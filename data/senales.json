@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-15T20:59+00:00",
+  "actualizado": "2026-07-16T00:13+00:00",
   "parametros": {
     "ema_fast": 10,
     "ema_slow": 55,
@@ -60,12 +60,12 @@
     },
     {
       "ticker": "CCU.SN",
-      "precio": 5230.0,
+      "precio": 5206.7,
       "tendencia": "BAJISTA",
       "adx": 12.1,
       "senal": "ESPERAR",
-      "retorno_10d": 3.79,
-      "retorno_1m": 0.44,
+      "retorno_10d": 3.33,
+      "retorno_1m": -0.01,
       "retorno_mes_ant": -4.67
     },
     {
@@ -210,32 +210,32 @@
     },
     {
       "ticker": "SONDA.SN",
-      "precio": 310.0,
+      "precio": 309.95,
       "tendencia": "ALCISTA",
       "adx": 29.4,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
-      "retorno_10d": 2.16,
-      "retorno_1m": 10.04,
+      "retorno_10d": 2.15,
+      "retorno_1m": 10.02,
       "retorno_mes_ant": 2.11
     },
     {
       "ticker": "ENTEL.SN",
-      "precio": 3686.0,
+      "precio": 3718.8,
       "tendencia": "ALCISTA",
       "adx": 17.5,
       "senal": "TENDENCIA ALCISTA (sin nueva señal)",
-      "retorno_10d": 4.66,
-      "retorno_1m": 5.61,
+      "retorno_10d": 5.59,
+      "retorno_1m": 6.55,
       "retorno_mes_ant": 0.0
     },
     {
       "ticker": "ILC.SN",
-      "precio": 21700.0,
+      "precio": 21719.0,
       "tendencia": "ALCISTA",
       "adx": 26.9,
       "senal": "ESPERAR",
-      "retorno_10d": -1.36,
-      "retorno_1m": -1.36,
+      "retorno_10d": -1.28,
+      "retorno_1m": -1.28,
       "retorno_mes_ant": -4.51
     },
     {
@@ -250,12 +250,12 @@
     },
     {
       "ticker": "AGUAS-A.SN",
-      "precio": 337.45,
-      "tendencia": "ALCISTA",
+      "precio": 335.46,
+      "tendencia": "BAJISTA",
       "adx": 12.0,
-      "senal": "TENDENCIA ALCISTA (sin nueva señal)",
-      "retorno_10d": 2.01,
-      "retorno_1m": 1.03,
+      "senal": "ESPERAR",
+      "retorno_10d": 1.41,
+      "retorno_1m": 0.44,
       "retorno_mes_ant": -1.46
     },
     {
@@ -290,12 +290,12 @@
     },
     {
       "ticker": "ORO-BLANCO.SN",
-      "precio": 10.8,
+      "precio": 10.72,
       "tendencia": "BAJISTA",
       "adx": 17.8,
       "senal": "TENDENCIA BAJISTA (sin nueva señal)",
-      "retorno_10d": -2.88,
-      "retorno_1m": -6.09,
+      "retorno_10d": -3.6,
+      "retorno_1m": -6.78,
       "retorno_mes_ant": -5.17
     },
     {
