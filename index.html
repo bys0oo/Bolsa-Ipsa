@@ -528,7 +528,7 @@ async function cargar(){
 
   function tarjetaWatchlist(s){
     const chips = [
-      s.watchlist_ema_pct != null
+      s.watchlist_ema_cerca
         ? `<span class="chip">EMA acercándose (${s.watchlist_ema_pct.toFixed(2)}%)</span>` : '',
       s.watchlist_en_squeeze ? `<span class="chip">En squeeze</span>` : '',
       s.watchlist_adx_subiendo ? `<span class="chip">ADX subiendo</span>` : '',

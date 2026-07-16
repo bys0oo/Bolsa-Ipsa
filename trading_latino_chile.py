@@ -196,6 +196,7 @@ def build_signal(df: pd.DataFrame) -> dict:
         "señal": signal,
         "watchlist_score": cercania["score"],
         "watchlist_ema_pct": cercania["distancia_ema_%"],
+        "watchlist_ema_cerca": cercania["ema_cerca"],
         "watchlist_en_squeeze": cercania["en_squeeze_reciente"],
         "watchlist_adx_subiendo": cercania["adx_subiendo"],
     }
@@ -223,8 +224,8 @@ def evaluar_cercania_compra(df: pd.DataFrame) -> dict:
     calculadas en df (build_signal las agrega antes de llamar a esto).
     """
     if len(df) < N_CERCANIA + 2 or df[["ema_fast", "ema_slow", "adx"]].iloc[-1].isna().any():
-        return {"score": 0, "distancia_ema_%": None, "en_squeeze_reciente": False,
-                "adx_subiendo": False}
+        return {"score": 0, "distancia_ema_%": None, "ema_cerca": False,
+                "en_squeeze_reciente": False, "adx_subiendo": False}
 
     last = df.iloc[-1]
     antes = df.iloc[-1 - N_CERCANIA]
@@ -244,6 +245,7 @@ def evaluar_cercania_compra(df: pd.DataFrame) -> dict:
     return {
         "score": score,
         "distancia_ema_%": round(float(dist_ema_hoy), 2),
+        "ema_cerca": cond_ema,
         "en_squeeze_reciente": cond_squeeze,
         "adx_subiendo": cond_adx,
     }
@@ -509,8 +511,8 @@ def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIM
     cols = ["ticker", "precio", "tendencia", "ema10", "ema55",
             "adx", "adx_bajando", "momentum", "squeeze", "señal",
             "retorno_10d_%", "retorno_1m_%", "retorno_mes_ant_%",
-            "watchlist_score", "watchlist_ema_pct", "watchlist_en_squeeze",
-            "watchlist_adx_subiendo"]
+            "watchlist_score", "watchlist_ema_pct", "watchlist_ema_cerca",
+            "watchlist_en_squeeze", "watchlist_adx_subiendo"]
     out = pd.DataFrame(resultados)[cols]
 
     orden_prioridad = {"COMPRA": 0, "VENTA": 1}
