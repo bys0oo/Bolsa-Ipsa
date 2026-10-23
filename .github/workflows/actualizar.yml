@@ -31,7 +31,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/senales.json
+          git add data/senales.json data/cartera_simulada.json
           git diff --cached --quiet && echo "Sin cambios" || git commit -m "Actualizar señales $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push
           
