@@ -8,5 +8,25 @@
     "fecha_entrada": "2026-10-23T13:20+00:00",
     "fecha_senal": "2026-10-23",
     "cerrada": false
+  },
+  {
+    "id": "CCU.SN-2026-10-22",
+    "ticker": "CCU.SN",
+    "tipo": "COMPRA",
+    "precio_entrada": 5359.0,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-10-23T14:45+00:00",
+    "fecha_senal": "2026-10-22",
+    "cerrada": false
+  },
+  {
+    "id": "ECL.SN-2026-10-22",
+    "ticker": "ECL.SN",
+    "tipo": "COMPRA",
+    "precio_entrada": 1864.4,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-10-23T14:45+00:00",
+    "fecha_senal": "2026-10-22",
+    "cerrada": false
   }
 ]
