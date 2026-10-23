@@ -337,6 +337,7 @@ def construir_historial_universo(tickers=TICKERS_IPSA, period=LOOKBACK_HISTORIAL
             data = yf.download(tk, period=period, interval=interval, progress=False, auto_adjust=True)
             if isinstance(data.columns, pd.MultiIndex):
                 data.columns = data.columns.get_level_values(0)
+            data = descartar_vela_incompleta(data)
             if data.empty or len(data) < KC_LENGTH + 5:
                 print(f"[!] {tk}: sin datos suficientes para historial, se omite")
                 continue
@@ -410,6 +411,7 @@ def calcular_benchmark(tickers=TICKERS_IPSA, period=LOOKBACK_HISTORIAL,
             data = yf.download(tk, period=period, interval=interval, progress=False, auto_adjust=True)
             if isinstance(data.columns, pd.MultiIndex):
                 data.columns = data.columns.get_level_values(0)
+            data = descartar_vela_incompleta(data)
             if data.empty or len(data) < max(horizontes) + 5:
                 continue
             close = data["Close"]
@@ -429,6 +431,28 @@ def calcular_benchmark(tickers=TICKERS_IPSA, period=LOOKBACK_HISTORIAL,
         else:
             resultado[h] = {"promedio": None, "n": 0}
     return resultado
+
+
+# ---------------------------------------------------------------------------
+# 4.9) VELAS CERRADAS: nunca calcular señales con la vela de hoy incompleta
+# ---------------------------------------------------------------------------
+HORA_CIERRE_CL = 18  # la Bolsa de Santiago cierra ~17:30 hora Chile
+
+
+def descartar_vela_incompleta(data: pd.DataFrame) -> pd.DataFrame:
+    """
+    Si la última vela es de HOY (hora Chile) y el mercado aún no cerró, la
+    descarta y deja el último cierre completo. Durante el día Yahoo entrega
+    una vela parcial cuyo cierre es el último precio del momento; calcular
+    señales con ella hace que aparezcan y desaparezcan sin que haya pasado
+    nada real, y no coincide con lo que mide el backtest (velas cerradas).
+    """
+    if data.empty:
+        return data
+    ahora = pd.Timestamp.now(tz="America/Santiago")
+    if data.index[-1].date() == ahora.date() and ahora.hour < HORA_CIERRE_CL:
+        return data.iloc[:-1]
+    return data
 
 
 # ---------------------------------------------------------------------------
@@ -460,11 +484,14 @@ def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIM
             # sale como DataFrame de 1 columna en vez de Series.
             if isinstance(data.columns, pd.MultiIndex):
                 data.columns = data.columns.get_level_values(0)
+            # Solo velas cerradas: si el mercado está abierto, se descarta la de hoy.
+            data = descartar_vela_incompleta(data)
             if data.empty or len(data) < KC_LENGTH + 5:
                 print(f"[!] {tk}: sin datos suficientes, se omite")
                 continue
             info = build_signal(data)
             info["ticker"] = tk
+            info["fecha_vela"] = str(data.index[-1].date())
             precio_hoy = float(data["Close"].iloc[-1])
 
             # Retorno a 10 días hábiles: mismo horizonte que usamos para medir
@@ -508,7 +535,7 @@ def analizar_universo(tickers=TICKERS_IPSA, period=LOOKBACK_PERIOD, interval=TIM
         print("No se obtuvieron resultados.")
         return pd.DataFrame()
 
-    cols = ["ticker", "precio", "tendencia", "ema10", "ema55",
+    cols = ["ticker", "precio", "fecha_vela", "tendencia", "ema10", "ema55",
             "adx", "adx_bajando", "momentum", "squeeze", "señal",
             "retorno_10d_%", "retorno_1m_%", "retorno_mes_ant_%",
             "watchlist_score", "watchlist_ema_pct", "watchlist_ema_cerca",

@@ -7,6 +7,9 @@ Se corre automáticamente todos los días vía GitHub Actions (ver
 .github/workflows/actualizar.yml), o manualmente en cualquier momento
 desde la pestaña "Actions" del repo (botón "Run workflow").
 
+Las señales se calculan SIEMPRE con velas cerradas: si el mercado sigue
+abierto, la vela de hoy se descarta y se usa el último cierre completo.
+
 Requisitos: pip install yfinance pandas numpy
 """
 
@@ -40,7 +43,7 @@ def calcular_resultado(tipo, monto_clp, precio_entrada, precio_referencia):
     return ganancia_clp, ganancia_pct
 
 
-def actualizar_cartera_simulada(filas, fecha_senal):
+def actualizar_cartera_simulada(filas):
     """
     Registra automáticamente $1.000.000 CLP en cada señal nueva de
     COMPRA/VENTA (sin depender de que alguien abra el dashboard), y cierra
@@ -48,6 +51,9 @@ def actualizar_cartera_simulada(filas, fecha_senal):
     ese mismo ticker. Se guarda en el repo (data/cartera_simulada.json),
     no en el navegador, así que queda disponible desde cualquier
     dispositivo y persiste aunque nadie entre a la página en varios días.
+
+    Cada posición se identifica por (ticker, fecha de la vela que generó la
+    señal), así una corrida repetida o manual no duplica posiciones.
     """
     if os.path.exists(CSV_CARTERA):
         with open(CSV_CARTERA, "r", encoding="utf-8") as f:
@@ -58,27 +64,30 @@ def actualizar_cartera_simulada(filas, fecha_senal):
     precio_actual_por_ticker = {f["ticker"]: f["precio"] for f in filas}
     senal_actual_por_ticker = {f["ticker"]: f["senal"] for f in filas}
 
-    # 1) Registrar señales nuevas de hoy (evitando duplicar si ya se
-    #    registró este ticker para esta misma fecha de señal).
-    ya_registrados_hoy = {(p["ticker"], p["fecha_senal"]) for p in posiciones}
+    # 1) Registrar señales nuevas (evitando duplicar si ya se registró
+    #    este ticker para esta misma vela de señal).
+    ya_registrados = {(p["ticker"], p["fecha_senal"]) for p in posiciones}
+    nuevas = 0
     for f in filas:
         if f["senal"] not in ("COMPRA", "VENTA"):
             continue
-        clave = (f["ticker"], fecha_senal)
-        if clave in ya_registrados_hoy:
+        fv = f["fecha_vela"]
+        if (f["ticker"], fv) in ya_registrados:
             continue
         posiciones.append({
-            "id": f"{f['ticker']}-{fecha_senal}",
+            "id": f"{f['ticker']}-{fv}",
             "ticker": f["ticker"],
             "tipo": f["senal"],
             "precio_entrada": f["precio"],
             "monto_clp": MONTO_FIJO_CLP,
             "fecha_entrada": datetime.now(timezone.utc).isoformat(timespec="minutes"),
-            "fecha_senal": fecha_senal,
+            "fecha_senal": fv,
             "cerrada": False,
         })
+        nuevas += 1
 
-    # 2) Cerrar posiciones abiertas si hoy apareció la señal contraria.
+    # 2) Cerrar posiciones abiertas si apareció la señal contraria.
+    cerradas = 0
     for p in posiciones:
         if p.get("cerrada"):
             continue
@@ -93,15 +102,14 @@ def actualizar_cartera_simulada(filas, fecha_senal):
             p["precio_cierre"] = precio_hoy
             p["ganancia_clp_final"] = round(ganancia_clp, 2)
             p["ganancia_pct_final"] = round(ganancia_pct, 4)
+            cerradas += 1
 
     os.makedirs("data", exist_ok=True)
     with open(CSV_CARTERA, "w", encoding="utf-8") as f:
         json.dump(posiciones, f, ensure_ascii=False, indent=2)
 
-    nuevas = sum(1 for p in posiciones if p["fecha_senal"] == fecha_senal)
-    cerradas_hoy = sum(1 for p in posiciones if p.get("fecha_cierre", "").startswith(fecha_senal))
     print(f"Cartera simulada: {len(posiciones)} posiciones en total "
-          f"({nuevas} nuevas hoy, {cerradas_hoy} cerradas hoy)")
+          f"({nuevas} nuevas en esta corrida, {cerradas} cerradas en esta corrida)")
 
 
 def main():
@@ -113,6 +121,7 @@ def main():
             filas.append({
                 "ticker": fila["ticker"],
                 "precio": float(fila["precio"]),
+                "fecha_vela": fila["fecha_vela"],
                 "tendencia": fila["tendencia"],
                 "adx": float(fila["adx"]) if pd_notna(fila["adx"]) else None,
                 "senal": fila["señal"],
@@ -128,6 +137,7 @@ def main():
 
     data = {
         "actualizado": datetime.now(timezone.utc).isoformat(timespec="minutes"),
+        "ultima_vela": max((f["fecha_vela"] for f in filas), default=None),
         "parametros": {
             "ema_fast": EMA_FAST,
             "ema_slow": EMA_SLOW,
@@ -145,10 +155,9 @@ def main():
     n_compra = sum(1 for f in filas if f["senal"] == "COMPRA")
     n_venta = sum(1 for f in filas if f["senal"] == "VENTA")
     print(f"Guardado data/senales.json: {len(filas)} tickers "
-          f"({n_compra} COMPRA, {n_venta} VENTA)")
+          f"({n_compra} COMPRA, {n_venta} VENTA) | última vela: {data['ultima_vela']}")
 
-    fecha_senal = data["actualizado"][:10]  # YYYY-MM-DD
-    actualizar_cartera_simulada(filas, fecha_senal)
+    actualizar_cartera_simulada(filas)
 
 
 def pd_notna(x):
