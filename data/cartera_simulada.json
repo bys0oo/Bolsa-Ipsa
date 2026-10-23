@@ -1,15 +1,5 @@
 [
   {
-    "id": "CCU.SN-2026-10-23",
-    "ticker": "CCU.SN",
-    "tipo": "COMPRA",
-    "precio_entrada": 5359.0,
-    "monto_clp": 1000000,
-    "fecha_entrada": "2026-10-23T13:20+00:00",
-    "fecha_senal": "2026-10-23",
-    "cerrada": false
-  },
-  {
     "id": "CCU.SN-2026-10-22",
     "ticker": "CCU.SN",
     "tipo": "COMPRA",
