@@ -18,5 +18,15 @@
     "fecha_entrada": "2026-10-23T14:45+00:00",
     "fecha_senal": "2026-10-22",
     "cerrada": false
+  },
+  {
+    "id": "CMPC.SN-2026-10-30",
+    "ticker": "CMPC.SN",
+    "tipo": "VENTA",
+    "precio_entrada": 940.0,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-10-31T00:21+00:00",
+    "fecha_senal": "2026-10-30",
+    "cerrada": false
   }
 ]
