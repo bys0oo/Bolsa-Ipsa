@@ -38,5 +38,15 @@
     "fecha_entrada": "2026-11-03T02:45+00:00",
     "fecha_senal": "2026-11-02",
     "cerrada": false
+  },
+  {
+    "id": "COLBUN.SN-2026-11-03",
+    "ticker": "COLBUN.SN",
+    "tipo": "COMPRA",
+    "precio_entrada": 153.0,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-04T01:01+00:00",
+    "fecha_senal": "2026-11-03",
+    "cerrada": false
   }
 ]
