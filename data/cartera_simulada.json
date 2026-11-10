@@ -7,7 +7,11 @@
     "monto_clp": 1000000,
     "fecha_entrada": "2026-10-23T14:45+00:00",
     "fecha_senal": "2026-10-22",
-    "cerrada": false
+    "cerrada": true,
+    "fecha_cierre": "2026-11-10T03:08+00:00",
+    "precio_cierre": NaN,
+    "ganancia_clp_final": NaN,
+    "ganancia_pct_final": NaN
   },
   {
     "id": "ECL.SN-2026-10-22",
@@ -47,6 +51,16 @@
     "monto_clp": 1000000,
     "fecha_entrada": "2026-11-04T01:01+00:00",
     "fecha_senal": "2026-11-03",
+    "cerrada": false
+  },
+  {
+    "id": "CCU.SN-2026-11-09",
+    "ticker": "CCU.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-10T03:08+00:00",
+    "fecha_senal": "2026-11-09",
     "cerrada": false
   }
 ]
