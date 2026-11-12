@@ -62,5 +62,15 @@
     "fecha_entrada": "2026-11-10T03:08+00:00",
     "fecha_senal": "2026-11-09",
     "cerrada": false
+  },
+  {
+    "id": "CCU.SN-2026-11-11",
+    "ticker": "CCU.SN",
+    "tipo": "VENTA",
+    "precio_entrada": 5191.0,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-12T02:06+00:00",
+    "fecha_senal": "2026-11-11",
+    "cerrada": false
   }
 ]
