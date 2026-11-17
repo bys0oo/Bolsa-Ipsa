@@ -72,5 +72,35 @@
     "fecha_entrada": "2026-11-12T02:06+00:00",
     "fecha_senal": "2026-11-11",
     "cerrada": false
+  },
+  {
+    "id": "CHILE.SN-2026-11-16",
+    "ticker": "CHILE.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-17T03:22+00:00",
+    "fecha_senal": "2026-11-16",
+    "cerrada": false
+  },
+  {
+    "id": "LTM.SN-2026-11-16",
+    "ticker": "LTM.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-17T03:22+00:00",
+    "fecha_senal": "2026-11-16",
+    "cerrada": false
+  },
+  {
+    "id": "SK.SN-2026-11-16",
+    "ticker": "SK.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-17T03:22+00:00",
+    "fecha_senal": "2026-11-16",
+    "cerrada": false
   }
 ]
