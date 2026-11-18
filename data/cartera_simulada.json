@@ -102,5 +102,15 @@
     "fecha_entrada": "2026-11-17T03:22+00:00",
     "fecha_senal": "2026-11-16",
     "cerrada": false
+  },
+  {
+    "id": "ITAUCL.SN-2026-11-17",
+    "ticker": "ITAUCL.SN",
+    "tipo": "COMPRA",
+    "precio_entrada": 22700.0,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-18T02:43+00:00",
+    "fecha_senal": "2026-11-17",
+    "cerrada": false
   }
 ]
