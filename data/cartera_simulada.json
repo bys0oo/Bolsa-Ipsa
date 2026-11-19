@@ -112,5 +112,15 @@
     "fecha_entrada": "2026-11-18T02:43+00:00",
     "fecha_senal": "2026-11-17",
     "cerrada": false
+  },
+  {
+    "id": "QUINENCO.SN-2026-11-18",
+    "ticker": "QUINENCO.SN",
+    "tipo": "COMPRA",
+    "precio_entrada": 4555.0,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-19T02:14+00:00",
+    "fecha_senal": "2026-11-18",
+    "cerrada": false
   }
 ]
