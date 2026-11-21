@@ -132,5 +132,15 @@
     "fecha_entrada": "2026-11-20T02:00+00:00",
     "fecha_senal": "2026-11-19",
     "cerrada": false
+  },
+  {
+    "id": "ANDINA-B.SN-2026-11-20",
+    "ticker": "ANDINA-B.SN",
+    "tipo": "COMPRA",
+    "precio_entrada": 4795.9,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-21T01:57+00:00",
+    "fecha_senal": "2026-11-20",
+    "cerrada": false
   }
 ]
