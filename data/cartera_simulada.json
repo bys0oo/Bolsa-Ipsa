@@ -202,5 +202,45 @@
     "fecha_entrada": "2026-11-25T03:56+00:00",
     "fecha_senal": "2026-11-24",
     "cerrada": false
+  },
+  {
+    "id": "CHILE.SN-2026-11-25",
+    "ticker": "CHILE.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-26T03:21+00:00",
+    "fecha_senal": "2026-11-25",
+    "cerrada": false
+  },
+  {
+    "id": "CENCOSUD.SN-2026-11-25",
+    "ticker": "CENCOSUD.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-26T03:21+00:00",
+    "fecha_senal": "2026-11-25",
+    "cerrada": false
+  },
+  {
+    "id": "CMPC.SN-2026-11-25",
+    "ticker": "CMPC.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-26T03:21+00:00",
+    "fecha_senal": "2026-11-25",
+    "cerrada": false
+  },
+  {
+    "id": "LTM.SN-2026-11-25",
+    "ticker": "LTM.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-26T03:21+00:00",
+    "fecha_senal": "2026-11-25",
+    "cerrada": false
   }
 ]
