@@ -242,5 +242,55 @@
     "fecha_entrada": "2026-11-26T03:21+00:00",
     "fecha_senal": "2026-11-25",
     "cerrada": false
+  },
+  {
+    "id": "CHILE.SN-2026-11-26",
+    "ticker": "CHILE.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-27T03:27+00:00",
+    "fecha_senal": "2026-11-26",
+    "cerrada": false
+  },
+  {
+    "id": "CENCOSUD.SN-2026-11-26",
+    "ticker": "CENCOSUD.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-27T03:27+00:00",
+    "fecha_senal": "2026-11-26",
+    "cerrada": false
+  },
+  {
+    "id": "PARAUCO.SN-2026-11-26",
+    "ticker": "PARAUCO.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-27T03:27+00:00",
+    "fecha_senal": "2026-11-26",
+    "cerrada": false
+  },
+  {
+    "id": "CMPC.SN-2026-11-26",
+    "ticker": "CMPC.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-27T03:27+00:00",
+    "fecha_senal": "2026-11-26",
+    "cerrada": false
+  },
+  {
+    "id": "MALLPLAZA.SN-2026-11-26",
+    "ticker": "MALLPLAZA.SN",
+    "tipo": "VENTA",
+    "precio_entrada": NaN,
+    "monto_clp": 1000000,
+    "fecha_entrada": "2026-11-27T03:27+00:00",
+    "fecha_senal": "2026-11-26",
+    "cerrada": false
   }
 ]
